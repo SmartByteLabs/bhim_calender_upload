@@ -1,0 +1,7 @@
+version: "Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)"
+options: "6cbbc5b9904846beeda2b723205113c8"
+build_time: [1629393073, 978783000]
+inputs:
+  "/Users/mmt9060/git/personal/flutter/calender_uploader/macos/Runner/MainFlutterWindow.swift": [1628351555, 489213213]
+  "/Users/mmt9060/git/personal/flutter/calender_uploader/macos/Runner/AppDelegate.swift": [1628351555, 486969429]
+  "/Users/mmt9060/git/personal/flutter/calender_uploader/macos/Flutter/GeneratedPluginRegistrant.swift": [1629393044, 303004177]

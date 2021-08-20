@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "545899784205",
+    "project_id": "bhim-calender",
+    "storage_bucket": "bhim-calender.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545899784205:android:e151281de10751e1548d44",
+        "android_client_info": {
+          "package_name": "com.example.calender_uploader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545899784205-c6vrjks51f7oj273lrd7prdpqc750h12.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABsFcAHXlyoSK_rCOZXTUAzUgYFAhr7Nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545899784205-c6vrjks51f7oj273lrd7prdpqc750h12.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
