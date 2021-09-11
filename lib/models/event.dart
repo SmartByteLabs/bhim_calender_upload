@@ -18,23 +18,13 @@ class Event {
   String name;
   String icon;
   String description;
-  DateTime actualDate;
   DateType dateType;
   List<IElement> elements;
-  int date, month;
+  int day, month, year;
   DateTime createdDate = DateTime.now(), updatedDate = DateTime.now();
 
-  Event(
-    this.uid,
-    this.name,
-    this.icon,
-    this.description,
-    this.actualDate,
-    this.dateType,
-    this.elements,
-    this.date,
-    this.month,
-  ) {
+  Event(this.uid, this.name, this.icon, this.description, this.dateType,
+      this.elements, this.day, this.month, this.year) {
     updatedDate = DateTime.now();
     if (uid == "") {
       uid = const Uuid().v4();
@@ -43,4 +33,4 @@ class Event {
   }
 }
 
-enum DateType { english, vikram }
+enum DateType { english, hindu }

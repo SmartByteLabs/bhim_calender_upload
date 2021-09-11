@@ -1,5 +1,5 @@
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 
-class FirebaseHandler {
-  FirebaseStorage storage = FirebaseStorage.instance;
-}
+// class FirebaseHandler {
+//   FirebaseStorage storage = FirebaseStorage.instance;
+// }

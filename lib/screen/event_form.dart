@@ -24,19 +24,23 @@ class EventForm extends StatefulWidget {
 
 class _EventFormState extends State<EventForm> {
   String textVal = "";
+  DateTime d = DateTime(2020, 12, 11);
 
-  Event e = Event("", "Name", "", "description", new DateTime(2001),
-      DateType.english, [], 10, 12);
+  Event e =
+      Event("", "Name", "", "description", DateType.english, [], 11, 12, 2020);
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: e.actualDate,
+        initialDate: d,
         firstDate: DateTime(1900),
         lastDate: DateTime(2101));
-    if (picked != null && picked != e.actualDate) {
+    if (picked != null && picked != d) {
       setState(() {
-        e.actualDate = picked;
+        d = picked;
+        e.day = d.day;
+        e.month = d.month;
+        e.year = d.year;
       });
     }
   }
@@ -91,14 +95,8 @@ class _EventFormState extends State<EventForm> {
                               children: [
                                 MaterialButton(
                                   onPressed: () => _selectDate(context),
-                                  child: Text("${e.actualDate.toLocal()}"
-                                      .split(' ')[0]),
+                                  child: Text("${d.toLocal()}".split(' ')[0]),
                                 ),
-                                MonthDayDropdown(e.date, e.month, (d, m) {
-                                  e.date = d;
-                                  e.month = m;
-                                  setState(() {});
-                                })
                               ],
                             ),
                           ),

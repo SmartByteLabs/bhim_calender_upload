@@ -33,7 +33,7 @@ dependencies:
   file_picker: ^4.0.0
   uuid: ^3.0.4
   youtube_player_flutter: ^8.0.0
-  firebase_storage:
+  # firebase_storage:
 
 
 
