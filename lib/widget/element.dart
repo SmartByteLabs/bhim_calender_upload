@@ -39,7 +39,8 @@ class ElementWidget extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: TextField(
+                child: TextFormField(
+                  initialValue: e.detail,
                   style: const TextStyle(color: Colors.black),
                   decoration: getLabelDecoration(getLabelName()),
                   onChanged: onChange,

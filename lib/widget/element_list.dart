@@ -21,10 +21,11 @@ class ElementListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-        child: Column(
-      key: Key(elms.length.toString()),
-      // onReorder: (oldIndex, newIndex) {},
-      children: this.getElementWidgets(),
-    ));
+      child: Column(
+        key: Key(elms.length.toString()),
+        // onReorder: (oldIndex, newIndex) {},
+        children: this.getElementWidgets(),
+      ),
+    );
   }
 }

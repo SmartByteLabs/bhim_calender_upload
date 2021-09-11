@@ -20,16 +20,33 @@ class Event {
   String description;
   DateType dateType;
   List<IElement> elements;
-  int day, month, year;
-  DateTime createdDate = DateTime.now(), updatedDate = DateTime.now();
+  DateTime actualDate,
+      createdDate = DateTime.now(),
+      updatedDate = DateTime.now();
 
   Event(this.uid, this.name, this.icon, this.description, this.dateType,
-      this.elements, this.day, this.month, this.year) {
+      this.elements, this.actualDate) {
     updatedDate = DateTime.now();
     if (uid == "") {
       uid = const Uuid().v4();
       createdDate = DateTime.now();
     }
+  }
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    DateTime dateTime = DateTime(json['year'], json['month'], json['day']);
+    if (json['icon'] == null) json['icon'] = "";
+    DateType dateType = DateType.english;
+    if (json['date_type'] == "hindu") dateType = DateType.hindu;
+    List<IElement> elements = [];
+    if (json['elements'] != null) {
+      for (Map<String, dynamic> elem in json['elements']) {
+        elements.add(IElement(type: elem['type'], detail: elem['details']));
+      }
+    }
+
+    return Event(json['_id'], json['name'], json['icon'], json['description'],
+        dateType, elements, dateTime);
   }
 }
 

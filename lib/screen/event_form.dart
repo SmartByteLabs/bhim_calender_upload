@@ -1,14 +1,9 @@
-import 'dart:io';
 import 'package:calender_uploader/models/element.dart';
 import 'package:calender_uploader/models/event.dart';
+import 'package:calender_uploader/provider/event.dart';
 import 'package:calender_uploader/utils/form.dart';
-import 'package:calender_uploader/widget/element.dart';
 import 'package:calender_uploader/widget/element_list.dart';
-import 'package:calender_uploader/widget/image_selector.dart';
-import 'package:calender_uploader/widget/month_day_dropdown.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 
 class EventForm extends StatefulWidget {
@@ -24,30 +19,24 @@ class EventForm extends StatefulWidget {
 
 class _EventFormState extends State<EventForm> {
   String textVal = "";
-  DateTime d = DateTime(2020, 12, 11);
-
-  Event e =
-      Event("", "Name", "", "description", DateType.english, [], 11, 12, 2020);
+  Event e = Event("", "", "", "", DateType.english, [], DateTime.now());
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: d,
+        initialDate: this.e.actualDate,
         firstDate: DateTime(1900),
         lastDate: DateTime(2101));
-    if (picked != null && picked != d) {
+    Event e = await EventAPIHandler.getEventByID("613c7d2db56562037560a33f");
+
+    if (picked != null && picked != e.actualDate) {
       setState(() {
-        d = picked;
-        e.day = d.day;
-        e.month = d.month;
-        e.year = d.year;
+        e.actualDate = DateTime(picked.year, picked.month, picked.day);
       });
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (e.icon != "") Image.network(e.icon);
+  Widget builder(BuildContext ctx, AsyncSnapshot<dynamic> s) {
     return Stack(
       children: [
         Container(
@@ -95,7 +84,8 @@ class _EventFormState extends State<EventForm> {
                               children: [
                                 MaterialButton(
                                   onPressed: () => _selectDate(context),
-                                  child: Text("${d.toLocal()}".split(' ')[0]),
+                                  child: Text("${e.actualDate.toLocal()}"
+                                      .split(' ')[0]),
                                 ),
                               ],
                             ),
@@ -121,6 +111,16 @@ class _EventFormState extends State<EventForm> {
         ),
       ],
     );
+  }
+
+  Future<void> getDate() async {
+    e = await EventAPIHandler.getEventByID("613c7d2db56562037560a33f");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (e.icon != "") Image.network(e.icon);
+    return FutureBuilder(future: getDate(), builder: builder);
   }
 
   void removeElement(String id) {
