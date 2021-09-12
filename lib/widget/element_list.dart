@@ -11,8 +11,8 @@ class ElementListWidget extends StatelessWidget {
   List<Widget> getElementWidgets() {
     List<Widget> out = [];
     for (IElement elm in elms) {
-      out.add(
-          ElementWidget(Key(elm.id), elm, () => onRemove(elm.id), (val) => {}));
+      out.add(ElementWidget(Key(elm.id), elm, () => onRemove(elm.id),
+          (val) => {elm.detail = val}));
     }
     return out;
   }

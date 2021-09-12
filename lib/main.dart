@@ -1,4 +1,6 @@
 import 'package:calender_uploader/screen/event_form.dart';
+import 'package:calender_uploader/screen/event_list.dart';
+import 'package:calender_uploader/widget/list_elem_event.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: EventForm(""),
+        body: EventList(),
       ),
     );
   }

@@ -48,6 +48,26 @@ class Event {
     return Event(json['_id'], json['name'], json['icon'], json['description'],
         dateType, elements, dateTime);
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> out = {
+      'name': name,
+      'description': description,
+      'year': actualDate.year,
+      'month': actualDate.month,
+      'day': actualDate.day,
+      'icon': icon,
+      'date_type': dateType == DateType.hindu ? 'hindu' : 'english',
+      'elements': []
+    };
+
+    for (IElement elem in elements) {
+      out['elements']
+          .add({'type': elem.type, 'details': elem.detail, 'id': elem.id});
+    }
+
+    return out;
+  }
 }
 
 enum DateType { english, hindu }

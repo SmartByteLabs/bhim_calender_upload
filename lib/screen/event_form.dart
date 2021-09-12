@@ -13,13 +13,17 @@ class EventForm extends StatefulWidget {
 
   @override
   _EventFormState createState() {
-    return _EventFormState();
+    print("called create state with $id");
+    return _EventFormState(id);
   }
 }
 
 class _EventFormState extends State<EventForm> {
   String textVal = "";
   Event e = Event("", "", "", "", DateType.english, [], DateTime.now());
+  String id = "";
+
+  _EventFormState(this.id);
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -27,7 +31,6 @@ class _EventFormState extends State<EventForm> {
         initialDate: this.e.actualDate,
         firstDate: DateTime(1900),
         lastDate: DateTime(2101));
-    Event e = await EventAPIHandler.getEventByID("613c7d2db56562037560a33f");
 
     if (picked != null && picked != e.actualDate) {
       setState(() {
@@ -37,84 +40,111 @@ class _EventFormState extends State<EventForm> {
   }
 
   Widget builder(BuildContext ctx, AsyncSnapshot<dynamic> s) {
-    return Stack(
-      children: [
-        Container(
-          height: double.infinity,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ImageSelector(e.icon, (icon) {
-              //   e.icon = icon;
-              //   // setState(() {});
-              // }),
-              Expanded(
-                // color: Colors.grey,
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Form(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            child: TextField(
-                              style: TextStyle(color: Colors.black),
-                              decoration: getLabelDecoration("Name"),
-                              controller: TextEditingController(text: e.name),
-                              onChanged: (value) {
-                                e.name = value;
-                              },
+    return Scaffold(
+      appBar: AppBar(),
+      body: Stack(
+        children: [
+          Container(
+            height: double.infinity,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ImageSelector(e.icon, (icon) {
+                //   e.icon = icon;
+                //   // setState(() {});
+                // }),
+                Expanded(
+                  // color: Colors.grey,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Form(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              child: TextField(
+                                style: TextStyle(color: Colors.black),
+                                decoration: getLabelDecoration("Name"),
+                                controller: TextEditingController(text: e.name),
+                                onChanged: (value) {
+                                  e.name = value;
+                                },
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            child: TextField(
-                              style: TextStyle(color: Colors.black),
-                              decoration: getLabelDecoration("Description"),
-                              controller:
-                                  TextEditingController(text: e.description),
-                              onChanged: (value) {
-                                e.description = value;
-                              },
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              child: TextField(
+                                style: TextStyle(color: Colors.black),
+                                decoration: getLabelDecoration("Description"),
+                                controller:
+                                    TextEditingController(text: e.description),
+                                onChanged: (value) {
+                                  e.description = value;
+                                },
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                MaterialButton(
-                                  onPressed: () => _selectDate(context),
-                                  child: Text("${e.actualDate.toLocal()}"
-                                      .split(' ')[0]),
-                                ),
-                              ],
+                            Container(
+                              child: Row(
+                                children: [
+                                  MaterialButton(
+                                    onPressed: () => _selectDate(context),
+                                    child: Text("${e.actualDate.toLocal()}"
+                                        .split(' ')[0]),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: ElementListWidget(e.elements, removeElement),
-                          )
-                        ],
+                            Container(
+                              child:
+                                  ElementListWidget(e.elements, removeElement),
+                            )
+                          ],
+                        ),
                       ),
+                      // height: 2000,
                     ),
-                    // height: 2000,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          right: 10,
-          bottom: 10,
-          child: FloatingActionButton(
-              child: Icon(Icons.add), onPressed: () => addField(context)),
-        ),
-      ],
+          Positioned(
+            left: 10,
+            bottom: 10,
+            child: FloatingActionButton(
+              heroTag: "save_btn",
+              child: Text("Save"),
+              onPressed: () => id == "" ? createEvent() : updateEvent(),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: FloatingActionButton(
+              heroTag: "add_btn",
+              child: Icon(Icons.add),
+              onPressed: () => addField(context),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Future<void> getDate() async {
-    e = await EventAPIHandler.getEventByID("613c7d2db56562037560a33f");
+    if (id == "") return;
+    print("fetching data for id $id");
+    e = await EventAPIHandler.getEventByID(id);
+  }
+
+  Future<void> createEvent() async {
+    await EventAPIHandler.createEvent(e);
+  }
+
+  Future<void> updateEvent() async {
+    await EventAPIHandler.updateEvent(e);
+    Navigator.pop(context);
   }
 
   @override
