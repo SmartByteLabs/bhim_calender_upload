@@ -19,6 +19,10 @@ class _EventListState extends State<EventList> {
     elems = await EventAPIHandler.getAllEvents();
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     print("builing data");
@@ -34,7 +38,7 @@ class _EventListState extends State<EventList> {
         children: [
           Container(
             child: ListView(
-              children: [for (var elem in elems) ListElem(elem)],
+              children: [for (var elem in elems) ListElem(elem, refresh)],
             ),
           ),
           Positioned(

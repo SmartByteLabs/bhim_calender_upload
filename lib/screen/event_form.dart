@@ -65,6 +65,17 @@ class _EventFormState extends State<EventForm> {
                               padding: EdgeInsets.all(5),
                               child: TextField(
                                 style: TextStyle(color: Colors.black),
+                                decoration: getLabelDecoration("Icon"),
+                                controller: TextEditingController(text: e.icon),
+                                onChanged: (value) {
+                                  e.icon = value;
+                                },
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              child: TextField(
+                                style: TextStyle(color: Colors.black),
                                 decoration: getLabelDecoration("Name"),
                                 controller: TextEditingController(text: e.name),
                                 onChanged: (value) {
@@ -140,6 +151,7 @@ class _EventFormState extends State<EventForm> {
 
   Future<void> createEvent() async {
     await EventAPIHandler.createEvent(e);
+    Navigator.pop(context);
   }
 
   Future<void> updateEvent() async {

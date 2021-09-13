@@ -26,6 +26,7 @@ class Event {
 
   Event(this.uid, this.name, this.icon, this.description, this.dateType,
       this.elements, this.actualDate) {
+    print("icon $icon");
     updatedDate = DateTime.now();
     if (uid == "") {
       uid = const Uuid().v4();
